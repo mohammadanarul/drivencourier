@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 from .models import PickupLocation
 from .forms import PicupLocationForm
 
 
-class PickupLocationListView(ListView):
+class PickupLocationListView(LoginRequiredMixin, ListView):
     model = PickupLocation
     template_name = "pickuplocation/pickup-location-list.html"
 
@@ -15,7 +15,7 @@ class PickupLocationListView(ListView):
         return qs
 
 
-class PickupLocationCreateView(CreateView):
+class PickupLocationCreateView(LoginRequiredMixin, CreateView):
     template_name = "pickuplocation/create-and-update-picuplocation.html"
     form_class = PicupLocationForm
     success_url = reverse_lazy('pickuplocations:pickup_location_list')
@@ -29,7 +29,7 @@ class PickupLocationCreateView(CreateView):
         context["title"] = 'Create Pickup Location'
         return context
 
-class PickupLocationUpdateView(UpdateView):
+class PickupLocationUpdateView(LoginRequiredMixin, UpdateView):
     model = PickupLocation
     template_name = "pickuplocation/create-and-update-picuplocation.html"
     form_class = PicupLocationForm

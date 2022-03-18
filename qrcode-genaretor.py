@@ -9,4 +9,4 @@ funny = {
 img = qrcode.make(funny)
 type(img)  # qrcode.image.pil.PilImage
 
-img.save("funny.png")
+img.save("funny.jpeg")

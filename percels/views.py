@@ -7,7 +7,7 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy
 from django.contrib import messages
-from pickuplocations.models import PickupLocation
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Percel
 from .forms import PercelForm
 
@@ -15,7 +15,7 @@ from .forms import PercelForm
 class HomeView(TemplateView):
     template_name = "home.html"
 
-class PercelListView(ListView):
+class PercelListView(LoginRequiredMixin, ListView):
     model = Percel
     template_name = "percels/percel-list.html"
 
@@ -25,7 +25,7 @@ class PercelListView(ListView):
         return qs
 
 
-class PercelCreateView(CreateView):
+class PercelCreateView(LoginRequiredMixin, CreateView):
     template_name = 'percels/create_and_update_percel.html'
     form_class = PercelForm
     success_url = reverse_lazy('percels:percels_view')
@@ -40,7 +40,7 @@ class PercelCreateView(CreateView):
         context["title"] = 'Create Percel'
         return context
 
-class PercelUpdateView(UpdateView):
+class PercelUpdateView(LoginRequiredMixin, UpdateView):
     model = Percel
     template_name = 'percels/create_and_update_percel.html'
     form_class = PercelForm
