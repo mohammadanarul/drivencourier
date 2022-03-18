@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ title }}{% endblock head_title %}
+{% block content %}
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        {{ title }}
+    </h2>
+    <div class="container mx-auto max-w-xl">
+        <form action="" method="post">
+            {% csrf_token %}
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">{{ form.pickup_name.label }}</span>
+                {{ form.pickup_name }}
+            </label>
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">{{ form.pickup_address.label }}</span>
+                {{ form.pickup_address }}
+            </label>
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">{{ form.pickup_area.label }}</span>
+                {{ form.pickup_area }}
+            </label>
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">{{ form.pickup_phone_number.label }}</span>
+                {{ form.pickup_phone_number }}
+            </label>
+            <button
+                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
