@@ -40,6 +40,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_login              = models.DateTimeField(verbose_name='last login', auto_now=True)
     joinded_date            = models.DateTimeField(verbose_name='date join', auto_now_add=True)
     is_active               = models.BooleanField(default=True)
+    is_admin                = models.BooleanField(default=False)
     is_staff                = models.BooleanField(default=False)
     
     objects = AccountManager()

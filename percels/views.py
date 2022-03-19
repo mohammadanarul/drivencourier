@@ -13,7 +13,10 @@ from .forms import PercelForm
 
 
 class HomeView(TemplateView):
-    template_name = "home.html"
+    template_name = "landing.html"
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard.html'
 
 class PercelListView(LoginRequiredMixin, ListView):
     model = Percel

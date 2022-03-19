@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, ListView
 from django.contrib.auth import login, authenticate, logout
@@ -8,9 +7,10 @@ from .thread import SendAccountActivationEmail
 from helpers.utils import SIX_NUMBER
 from .forms import CustomerRegisterForm, RiderRegisterForm, ManagerRegisterForm
 from .models import Account
+from .mixins import ManagerRequiredMixin
 
 
-class AccountListView(ListView):
+class AccountListView(ManagerRequiredMixin, ListView):
     model = Account
     template_name = "accounts/users.html"
 
@@ -32,7 +32,7 @@ class CustomerRegisterView(CreateView):
         context["title"] = 'Customer Register Form'
         return context
 
-class RiderRegisterView(CreateView):
+class RiderRegisterView(ManagerRequiredMixin, CreateView):
     template_name = 'accounts/register.html'
     form_class = RiderRegisterForm 
     success_url = reverse_lazy('accounts:verification_view')
@@ -91,7 +91,7 @@ class LoginView(TemplateView):
     template_name = 'accounts/login.html'
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('/')
+            return redirect('percels:dashboard_view')
         return render(request, self.template_name)
     
     def post(self, request, *args, **kwargs):
@@ -103,7 +103,7 @@ class LoginView(TemplateView):
                 if user.is_active:
                     login(request, user)
                     messages.info(request, "successfylly login.")
-                    return redirect('/')
+                    return redirect('percels:dashboard_view')
                 else:
                     messages.info(request, "Please check your mail and verification the link.")
                     return render(request, self.template_name)

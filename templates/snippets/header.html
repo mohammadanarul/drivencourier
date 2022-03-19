@@ -1,3 +1,4 @@
+{% load static %}
 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
     <div
         class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
@@ -11,20 +12,24 @@
             </svg>
         </button>
         <!-- Search input -->
-        <!-- <div class="flex justify-center flex-1 lg:mr-32">
+        <div class="flex justify-center flex-1 lg:mr-32">
             <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                 <div class="absolute inset-y-0 flex items-center pl-2">
-                    <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                    <!-- <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                             clip-rule="evenodd"></path>
+                    </svg> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     </svg>
                 </div>
                 <input
                     class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                    type="text" placeholder="Search for projects" aria-label="Search" />
+                    type="text" placeholder="Tracking your percel" aria-label="Search" />
             </div>
-        </div> -->
+        </div>
         <div></div>
         <ul class="flex items-center flex-shrink-0 space-x-6">
             <!-- Theme toggler -->
@@ -101,7 +106,7 @@
                     @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
                     aria-haspopup="true">
                     <img class="object-cover w-8 h-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                        src="{% static 'img/logo.svg' %}"
                         alt="" aria-hidden="true" />
                 </button>
                 <template x-if="isProfileMenuOpen">

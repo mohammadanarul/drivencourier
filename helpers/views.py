@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+class AboutView(TemplateView):
+    template_name = 'about.html'
 
 def handle_bad_request(request, exception):
     context = {

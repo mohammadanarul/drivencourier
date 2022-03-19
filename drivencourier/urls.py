@@ -2,12 +2,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from helpers.views import AboutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('accounts.urls', namespace='accounts')),
     path('', include('percels.urls', namespace="percels")),
     path('pickup/', include('pickuplocations.urls', namespace="pickuplocations")),
+    path('about/', AboutView.as_view(), name='about_view')
 ]
 
 # exception handling view
