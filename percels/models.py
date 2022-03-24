@@ -12,13 +12,14 @@ class Percel(BaseModel):
     STATUS_CHOICES = (
         ('Approved', 'Approved'),
         ('PickupPending', 'PickupPending'),
+        ('DeliveryPending', 'DeliveryPending'),
         ('Processing', 'Processing'),
         ('Completed', 'Completed'),
         ('Cancel', 'Cancel'),
         ('Return', 'Return'),
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='percel', verbose_name='percel')
-    traking_id = models.CharField(_('traking id'), max_length=12)
+    traking_id = models.CharField(_('traking id'), blank=True, max_length=12)
     customer_name = models.CharField(('customer name'), max_length=100)
     customer_phone_number = models.CharField(_('customer phone number'), max_length=100)
     customer_address = models.CharField(_('customer address'), max_length=250)
@@ -28,9 +29,6 @@ class Percel(BaseModel):
     product_selling_price = models.CharField(_('product selling price'), max_length=15)
     product_category = models.CharField(_('product category'), max_length=100)
     description = models.TextField(_('description'), max_length=350)
-    delivery_by = models.ForeignKey(Rider, on_delete=models.SET_NULL, null=True, blank=True, related_name='percel_delivery',
-     verbose_name='delivery by')
-    pickup_by = models.ForeignKey(Rider, on_delete=models.SET_NULL, null=True, blank=True, related_name='percel_pickup', verbose_name='pickup by')
     status = models.CharField(_('status'), choices=STATUS_CHOICES, default='PickupPending', max_length=15)
 
     def __str__(self):
@@ -40,6 +38,10 @@ class Percel(BaseModel):
         if not self.traking_id:
             self.traking_id = UNIQUE_TRAKING_NUMBER
         super(Percel, self).save(*args, **kwargs)
+
+    @property
+    def pickuplocation(self):
+        return self.pickup_location.pickup_area
     
     class Meta:
         ordering = ['-pk']

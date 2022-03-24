@@ -9,6 +9,7 @@ urlpatterns = [
     path('account/', include('accounts.urls', namespace='accounts')),
     path('', include('percels.urls', namespace="percels")),
     path('pickup/', include('pickuplocations.urls', namespace="pickuplocations")),
+    path('percel-pickup/', include('percelpickup.urls', namespace="percelpickup")),
     path('about/', AboutView.as_view(), name='about_view')
 ]
 

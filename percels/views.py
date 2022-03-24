@@ -10,13 +10,24 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Percel
 from .forms import PercelForm
-
+from percelpickup.models import PercelPickup
 
 class HomeView(TemplateView):
     template_name = "landing.html"
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(LoginRequiredMixin, ListView):
+    model = Percel
     template_name = 'dashboard.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super(DashboardView, self).get_queryset(*args, **kwargs)
+        qs = qs.filter(user=self.request.user)
+        return qs
+    
+    def get_context_data(self, **kwargs):
+        context =  super(DashboardView, self).get_context_data(**kwargs)
+        context["pickup_percel_list"] = PercelPickup.objects.filter(pickup_by=self.request.user, completed=False)
+        return context
 
 class PercelListView(LoginRequiredMixin, ListView):
     model = Percel
@@ -34,6 +45,7 @@ class PercelCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('percels:percels_view')
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
         messages.success(self.request, 'Created percel')
         return super(PercelCreateView, self).form_valid(form)
     

@@ -49,7 +49,18 @@ class Account(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username', 'email']
 
     def __str__(self):
-        return f'{self.username}'    
+        return f'{self.username}'
+    
+    @property
+    def user_manager(self):
+        for ty in self.type:
+            if ty == self.UserTypes.MANAGER:
+                return ty 
+    @property
+    def user_rider(self):
+        for ty in self.type:
+            if ty == self.UserTypes.RIDER:
+                return ty 
     
 
     def has_perm(self, perm, obj=None):

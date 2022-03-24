@@ -29,6 +29,8 @@ MY_APPS = [
     'locations.apps.LocationsConfig',
     'pickuplocations.apps.PickuplocationsConfig',
     'percels.apps.PercelsConfig',
+    'percelpickup.apps.PercelpickupConfig',
+    'perceldelivery.apps.PerceldeliveryConfig',
 
 ]
 
@@ -63,7 +65,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # custom context processors
-                # 'accounts.context_processors.user_context_processors',
+                'accounts.context_processors.user_context_processors',
             ],
         },
     },
