@@ -26,7 +26,8 @@ class DashboardView(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context =  super(DashboardView, self).get_context_data(**kwargs)
-        context["pickup_percel_list"] = PercelPickup.objects.filter(pickup_by=self.request.user, completed=False)
+        context["pickup_percel_list"] = PercelPickup.objects.filter(status='Pending')
+        context["percel_pickup_manager_accepted"] = PercelPickup.objects.filter(status='Accept')
         return context
 
 class PercelListView(LoginRequiredMixin, ListView):
@@ -45,7 +46,13 @@ class PercelCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('percels:percels_view')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        # You need to get a new object based on the form
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        ... # in case you want to modify the object before commit
+        self.object.save()
+        # you can use it to assign to the second model
+        PercelPickup.objects.create(percel=self.object)
         messages.success(self.request, 'Created percel')
         return super(PercelCreateView, self).form_valid(form)
     
@@ -54,6 +61,7 @@ class PercelCreateView(LoginRequiredMixin, CreateView):
         context =  super(PercelCreateView, self).get_context_data(**kwargs)
         context["title"] = 'Create Percel'
         return context
+
 
 class PercelUpdateView(LoginRequiredMixin, UpdateView):
     model = Percel

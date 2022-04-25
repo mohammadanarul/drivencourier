@@ -6,11 +6,23 @@ from accounts.models import Rider, Manager
 
 
 class PercelDelivery(BaseModel):
-    delivery_to = models.ForeignKey(Manager, on_delete=models.PROTECT, related_name='delivery_to')
-    delivery_by = models.ForeignKey(Rider, on_delete=models.PROTECT,
+    DELIVERY_STATUS = (
+        ('Pending', 'Pending'),
+        ('Accept', 'Accept'),
+        ('Completed', 'Completed'),
+        ('Cance', 'Cance')
+    )
+    delivery_to = models.ForeignKey(Manager,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name='delivery_to')
+    delivery_by = models.ForeignKey(Rider,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
         related_name='delivery_by', verbose_name='delivery by')
     percel = models.ForeignKey(Percel, on_delete=models.PROTECT, related_name='percel_delivey')
-    bar_code = models.ImageField(upload_to='delivery-barcode/')
-    completed = models.BooleanField(default=False)
+    status = models.CharField(choices=DELIVERY_STATUS, default='Pending', max_length=10)
 
 

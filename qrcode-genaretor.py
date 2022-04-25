@@ -14,4 +14,9 @@ def bar_code_ganareotr(lol):
     b_img = qrcode.make(lol)
     b_img.save(f'{lol}.jpeg')
 
-bar_code_ganareotr(lol_id)
+
+a = 12
+b = 10
+num_sum = a + b
+
+

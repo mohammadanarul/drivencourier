@@ -7,7 +7,7 @@ class PercelPickupForm(forms.ModelForm):
     class Meta:
         model = PercelPickup
         field = '__all__'
-        exclude = ['pickuped_to', 'completed']
+        exclude = ['pickuped_to', 'status']
     
     def __init__(self, *args, **kwargs):
         super(PercelPickupForm, self).__init__(*args, **kwargs)
