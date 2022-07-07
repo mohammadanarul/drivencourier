@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
 
-class AboutView(TemplateView):
-    template_name = 'about.html'
+
+def about_view(request):
+    return render(request, 'about.html')
+
 
 def handle_bad_request(request, exception):
     context = {
-        'title': '400 Not avilalbe this page.',
+        'title': '400 Not available this page.',
         'status': 400,
     }
     return render(request, 'exception_handling/exception-handle.html', context, status=400)
@@ -18,6 +19,7 @@ def handle_permission_denied(request, exception):
         'status': 403,
     }
     return render(request, 'exception_handling/exception-handle.html', context, status=403)
+
 
 def handle_page_not_found(request, exception):
     print(exception)

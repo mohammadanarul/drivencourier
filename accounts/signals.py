@@ -1,57 +1,52 @@
+import random
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from helpers.utils import SIX_NUMBER
+from .models import Account, Merchant, Rider
 from .thread import SendAccountActivationEmail
-from .models import Account, Customer, Rider, Manager
 
 
 @receiver(post_save, sender=Account)
 def send_email_token(sender, instance, created, **kwargs):
     try:
         if not instance.otp:
-            otp = str(SIX_NUMBER)
+            otp = str(random.randint(100000, 999999))
+            title = 'Congratulations Email activation Code.'
             instance.otp = otp
             ''' EXCEUTING THREAD TO SEND EMAIL '''
-            SendAccountActivationEmail(instance.email , otp).start()
+            print('I am a main accounts signals', otp, instance.email)
+            SendAccountActivationEmail(instance.email, otp, title).start()
 
     except Exception as e:
         print(e)
 
-@receiver(post_save, sender=Manager)
-def send_email_token(sender, instance, created, **kwargs):
-    try:
-        if not instance.otp:
-            otp = str(SIX_NUMBER)
-            instance.otp = otp
-            instance.save()
-            ''' EXCEUTING THREAD TO SEND EMAIL '''
-            SendAccountActivationEmail(instance.email , otp).start()
-
-    except Exception as e:
-        print(e)
 
 @receiver(post_save, sender=Rider)
 def send_email_token(sender, instance, created, **kwargs):
     try:
         if not instance.otp:
-            otp = str(SIX_NUMBER)
+            otp = str(random.randint(100000, 999999))
+            title = 'Congratulations Email activation Code.'
             instance.otp = otp
             instance.save()
             ''' EXCEUTING THREAD TO SEND EMAIL '''
-            SendAccountActivationEmail(instance.email , otp).start()
+            print('I am a rider signals', otp, instance.email)
+            SendAccountActivationEmail(instance.email, otp, title).start()
 
     except Exception as e:
         print(e)
 
-@receiver(post_save, sender=Customer)
+
+@receiver(post_save, sender=Merchant)
 def send_email_token(sender, instance, created, **kwargs):
     try:
         if not instance.otp:
-            otp = str(SIX_NUMBER)
+            otp = str(random.randint(100000, 999999))
+            title = 'Congratulations Email activation Code.'
             instance.otp = otp
             instance.save()
             ''' EXCEUTING THREAD TO SEND EMAIL '''
-            SendAccountActivationEmail(instance.email , otp).start()
+            print('I am a merchant signals', otp, instance.email)
+            SendAccountActivationEmail(instance.email, otp, title).start()
 
     except Exception as e:
         print(e)

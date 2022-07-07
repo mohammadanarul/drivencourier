@@ -10,7 +10,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
     'accounts.backends.EmailOrPhoneNumberBackend'
-    ] # new
+    ]
 
 # Application definition
 
@@ -26,19 +26,14 @@ DJANGO_DEFAUL_APPS = [
 
 MY_APPS = [
     'accounts.apps.AccountsConfig',
-    'locations.apps.LocationsConfig',
-    'pickuplocations.apps.PickuplocationsConfig',
-    'percels.apps.PercelsConfig',
-    'percelpickup.apps.PercelpickupConfig',
-    'perceldelivery.apps.PerceldeliveryConfig',
-
+    'delivery_managements.apps.DeliveryManagementsConfig',
 ]
 
 THIRD_PARTY_APPS = [
     'mptt',
 ]
 
-INSTALLED_APPS = DJANGO_DEFAUL_APPS + THIRD_PARTY_APPS + MY_APPS
+INSTALLED_APPS = DJANGO_DEFAUL_APPS + MY_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,10 +68,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'drivencourier.wsgi.application'
 
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
