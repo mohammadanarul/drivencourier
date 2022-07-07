@@ -1,13 +1,16 @@
-from random import random
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from accounts.models import Account
 from accounts.thread import SendAccountActivationEmail
+import random
 
 
 class EmailVerifyView(TemplateView):
     template_name = 'accounts/check-otp.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
 
     def post(self, request):
         try:
@@ -28,6 +31,9 @@ class EmailVerifyView(TemplateView):
 
 class PasswordResetView(TemplateView):
     template_name = "password_reset/password_reset.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         try:
@@ -50,6 +56,9 @@ class PasswordResetView(TemplateView):
 
 class EmailPasswordResetVerifyView(TemplateView):
     template_name = 'accounts/check-otp.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
 
     def post(self, request):
         try:
